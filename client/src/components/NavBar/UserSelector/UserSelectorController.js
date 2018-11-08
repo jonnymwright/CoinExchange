@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import UserSelectorView from "./UserSeletorView";
-import {changeActiveUser} from '../../../reducers/users/userActionCreators'
+import {changeActiveUser} from '../../../reducers/user/userActionCreators'
 
 const mapStateToProps = state => {
   return {

@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
-import user from './users/userReducers';
+import user from './user/userReducers';
+import recentTrades from './recentTrades/recentTradesReducer';
 
 
 const rootReducer = combineReducers({ 
-    user
+    user,
+    recentTrades
 });
 
 export default rootReducer;
