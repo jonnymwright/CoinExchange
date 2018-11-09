@@ -2,11 +2,12 @@ import { connect } from 'react-redux';
 import AvailableTradesView from '../AvailableTradesView';
 
 const mapStateToProps = (store) => ({
-    trades: store.availableTrades.sells
+    trades: store.myTrades.sells,
+    type: 'Sells'
 });
 
-const AvailableSellsControl = connect(
+const MySellsController = connect (
     mapStateToProps
-)(AvailableTradesView);
+) (AvailableTradesView);
 
-export default AvailableSellsControl;
+export default MySellsController;

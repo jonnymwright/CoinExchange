@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import AvailableTradesView from './AvailableTradesView';
+import AvailableTradesView from '../AvailableTradesView';
 
 const mapStateToProps = (store) => ({
     trades: store.availableTrades.buys
