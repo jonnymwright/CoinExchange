@@ -10,14 +10,11 @@ const datetimeToTimeInterval = datetime => {
     { unit: 'w', divisor: 7},
     { unit: 'y', divisor: 52}
   ];
-  console.log(new Date());
-  console.log(datetime);
   let result = new Date() - datetime;
   let unit = 'millis';
 
   for (let i = 0; i < timeDivisions.length; i++) {
     let candidate = result/timeDivisions[i].divisor;
-    console.log('' + candidate + ' '  + timeDivisions[i].unit);
     if (candidate < 1) {
       return '' + Math.round(result) + unit;
     } else {
