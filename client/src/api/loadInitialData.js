@@ -7,6 +7,17 @@ export async function loadRecentTrades() {
         time: new Date(trade.time)
       }))
     );
-    console.log(result)
+    return result;
+}
+
+export async function loadAggregatedBuys() {
+  var result = await fetch("http://localhost:3000/aggregated/buys")
+    .then(res => res.json());
+    return result;
+}
+
+export async function loadAggregatedSells() {
+  var result = await fetch("http://localhost:3000/aggregated/sells")
+    .then(res => res.json());
     return result;
 }

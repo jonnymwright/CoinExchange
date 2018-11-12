@@ -1,5 +1,12 @@
+import { receiveRecentAvailableBuysId } from "./availbleTradesActionCreators";
+
 const buys = (state = [], action) => {
-    return state;
-}
+  switch (action.type) {
+    case receiveRecentAvailableBuysId:
+      return action.buys;
+    default:
+      return state;
+  }
+};
 
 export default buys;
