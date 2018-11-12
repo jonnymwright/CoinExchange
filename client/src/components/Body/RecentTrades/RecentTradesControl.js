@@ -1,5 +1,8 @@
-import { connect } from "react-redux";
-import RecentTradesView from "./RecentTradesView";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import RecentTradesView from './RecentTradesView';
+import { loadRecentTrades } from '../../../api/loadInitialData';
+import { receiveRecentTrades } from '../../../reducers/recentTrades/recentTradesActionCreator';
 
 const datetimeToTimeInterval = datetime => {
   const timeDivisions = [
@@ -28,10 +31,25 @@ const mapStateToProps = state => ({
   recentTrades: state.recentTrades,
   displayDate: datetimeToTimeInterval
 });
-const mapDispatchToProps = {};
+const mapDispatchToProps = { receiveRecentTrades };
 
-const RecentTradesController = connect(
+class RecentTradesController extends Component {
+  async componentDidMount() {
+    this.props.receiveRecentTrades(await loadRecentTrades());
+  }
+
+  render() {
+    return (
+      <RecentTradesView
+        recentTrades={this.props.recentTrades}
+        displayDate={this.props.displayDate}
+      />
+    );
+  }
+}
+
+RecentTradesController = connect(
   mapStateToProps,
   mapDispatchToProps
-)(RecentTradesView);
+)(RecentTradesController);
 export default RecentTradesController;
