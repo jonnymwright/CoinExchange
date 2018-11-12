@@ -9,7 +9,7 @@ import registerServiceWorker from './registerServiceWorker';
 import configureStore from './store/configure-store';
 
 const initialState = {
-  user: {users: ['Tom', 'Dick', 'Harry']},
+  user: {users: []},
   myTrades: {
     buys: [{
       price: 16,

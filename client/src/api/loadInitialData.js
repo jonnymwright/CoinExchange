@@ -21,3 +21,9 @@ export async function loadAggregatedSells() {
     .then(res => res.json());
     return result;
 }
+
+export async function loadUsers() {
+  const result = await fetch("http://localhost:3000/users")
+  .then(res => res.json());
+  return result;
+}

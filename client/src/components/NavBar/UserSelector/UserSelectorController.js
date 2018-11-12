@@ -1,6 +1,8 @@
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import UserSelectorView from "./UserSeletorView";
-import {changeActiveUser} from '../../../reducers/user/userActionCreators'
+import * as actionCreators from '../../../reducers/user/userActionCreators'
+import { loadUsers } from "../../../api/loadInitialData";
 
 const mapStateToProps = state => {
   return {
@@ -8,11 +10,22 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = {
-    onChange: changeActiveUser
+    onChange: actionCreators.changeActiveUser,
+    receiveUsers: actionCreators.receiveUsers
 };
 
-const UserSelectorController = connect(
+class UserSelectorController extends Component {
+  async componentDidMount() {
+    this.props.receiveUsers(await loadUsers());
+  }
+  
+  render() {
+    return (<UserSelectorView users={this.props.users} onChange={this.props.onChange}/>);
+  }
+}
+
+UserSelectorController = connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserSelectorView);
+)(UserSelectorController);
 export default UserSelectorController;
