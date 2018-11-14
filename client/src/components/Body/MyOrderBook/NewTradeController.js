@@ -6,8 +6,8 @@ const mapDispatchToProps = () => ({
 });
 
 const NewTradeController = connect(
-     null,
-     mapDispatchToProps
+    null,
+    mapDispatchToProps
 ) (NewTradesView);
 
 export default NewTradeController;

@@ -1,6 +1,6 @@
 var getHistoricalTrades = require("../app/recentHistoricalModel");
 var aggregatedOrderBookModel = require("../app/aggregatedOrderBookModel");
-var usersModel = require("../app/usersModel");
+var userRoutes = require('./userRoutes')
 
 var appRouter = function(app) {
   app.get("/", function(req, res) {
@@ -19,9 +19,7 @@ var appRouter = function(app) {
     res.status(200).send(JSON.stringify(aggregatedOrderBookModel.getAggregatedSellOrders()));
   });
 
-  app.get("/users", function(req, res) {
-    res.status(200).send(JSON.stringify(usersModel.getUsers()));
-  })
+  userRoutes.addUserRoutes(app);
 };
 
 module.exports = appRouter;

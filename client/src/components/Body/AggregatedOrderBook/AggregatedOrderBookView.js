@@ -8,8 +8,8 @@ const AggregatedOrderBookView = () => (
       <h3 className="my-0 font-weight-normal">Aggregated order book</h3>
     </div>
     <div className="card-body">
-      <AvailableBuysControl type='Buys'/>
-      <AvailableSellsControl type='Sells'/>
+      <AvailableBuysControl/>
+      <AvailableSellsControl/>
     </div>
   </div>
 );

@@ -15,7 +15,7 @@ class AvailableSellsControl extends Component {
     }
   
     render() {
-      return <AvailableTradesView trades={this.props.trades} />;
+      return <AvailableTradesView trades={this.props.trades} type='Sells' />;
     }
   }
 AvailableSellsControl = connect(

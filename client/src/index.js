@@ -11,16 +11,7 @@ import configureStore from './store/configure-store';
 const initialState = {
   user: {users: []},
   myTrades: {
-    buys: [{
-      price: 16,
-      quantity: 7
-    },{
-      price: 15,
-      quantity: 4
-    },{
-      price: 11,
-      quantity: 5
-    }],
+    buys: [],
     sells: [{
       price: 9,
       quantity: 5
