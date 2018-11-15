@@ -6,12 +6,10 @@ const addUserRoutes = function(app) {
   });
 
   app.get('/users/:userId/buys', function(req, res) {
-      console.log(req.params.userId);
       res.status(200).send(usersModel.getBuys(req.params.userId));
   });
   
   app.get('/users/:userId/sells', function(req, res) {
-    console.log(req.params.userId);
     res.status(200).send(usersModel.getSells(req.params.userId));
 });
 };
