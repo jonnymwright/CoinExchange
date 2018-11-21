@@ -1,17 +1,18 @@
 async function fetchFromServer(resource) {
-  var result = await fetch("http://localhost:3000/" + resource).then(res =>
-    res.json()
-  );
+  var result = await fetch("http://localhost:3000/" + resource).then(res => {
+    
+    return res.json();
+  });
   return result;
 }
 
 export async function loadRecentTrades() {
-  const resultFromServer = await fetchFromServer("historical")
+  const resultFromServer = await fetchFromServer("historical");
   return resultFromServer.map(trade => ({
     price: trade.price,
     quantity: trade.quantity,
     time: new Date(trade.time)
-  }))
+  }));
 }
 
 export async function loadAggregatedBuys() {
