@@ -1,26 +1,16 @@
-import React, { Component } from "react";
 import { connect } from "react-redux";
 import AvailableTradesView from "../AvailableTradesView";
 import { receiveAvailableBuys } from "../../../reducers/availbleTrades/availbleTradesActionCreators";
-import { loadAggregatedBuys } from "../../../api/loadInitialData";
 
 const mapStateToProps = store => ({
-  trades: store.availableTrades.buys
+  trades: store.availableTrades.buys,
+  type: "Buys"
 });
 const mapDispatchToProps = { receiveAvailableBuys };
 
-class AvailableBuysControl extends Component {
-  async componentDidMount() {
-    this.props.receiveAvailableBuys(await loadAggregatedBuys());
-  }
-
-  render() {
-    return <AvailableTradesView trades={this.props.trades}  type='Buys'/>;
-  }
-}
-AvailableBuysControl = connect(
+const AvailableBuysControl = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AvailableBuysControl);
+)(AvailableTradesView);
 
 export default AvailableBuysControl;
