@@ -5,14 +5,20 @@
   "description": "Server-side code for bitcoin exchange",
   "author": "Scott Logic Ltd",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "js-sorted-set": "^0.2.0",
+    "socket.io": "^2.1.1"
   },
   "devDependencies": {
-    "jest": "^22.3.0"
+    "jest": "^22.4.4"
   },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
     "start": "node ./app.js"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testURL": "http://localhost"
   }
 }

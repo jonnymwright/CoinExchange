@@ -1,5 +1,5 @@
 var getHistoricalTrades = require("../app/recentHistoricalModel");
-var aggregatedOrderBookModel = require("../app/aggregatedOrderBookModel");
+var aggregatedOrderBookModel = require("../app/orderBookModel");
 var userRoutes = require('./userRoutes')
 
 var appRouter = function(app) {
