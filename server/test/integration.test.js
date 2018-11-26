@@ -3,9 +3,10 @@ const createMatcher = require("../app/factory")
 describe("Integration", () => {
     let matcher;
     let orderBook;
+    let orderHistoryModel;
 
     beforeEach(() => {
-        ({ matcher, orderBook } = createMatcher());
+        ({ matcher, orderBook, orderHistoryModel } = createMatcher());
     });
 
     it ("adds sells to the order book", () => {
@@ -69,5 +70,24 @@ describe("Integration", () => {
         expect(sells[0].price).toEqual(6);
         expect(sells[0].quantity).toEqual(4);
         expect(orderBook.getAggregatedBuyOrders().length).toEqual(0);
+    });
+
+    it ("emits a trade into the historical trades", () => {
+        const sell = {
+            price: 5,
+            quantity: 5,
+            uid: "id7"
+        };
+        const buy = {
+            price: 5,
+            quantity: 5,
+            uid: "id8"
+        };
+        matcher.addNewBuy(buy);
+        matcher.addNewSell(sell);
+
+        const historical = orderHistoryModel.getHistoricalTrades();
+
+        expect(historical.length).toEqual(1);
     });
 });
