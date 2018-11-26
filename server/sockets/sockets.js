@@ -27,7 +27,11 @@ const sockets = http => {
     socket.on("request initial data", () => {
       socket.emit("aggregated buys", orderBook.getAggregatedBuyOrders());
       socket.emit("aggregated sells", orderBook.getAggregatedSellOrders());
-    })
+    });
+
+    socket.on("receive trade", (trade) => {
+      console.log("received a trade: ", trade);
+    });
   });
   const socketPort = 4000;
   http.listen(socketPort, function() {
