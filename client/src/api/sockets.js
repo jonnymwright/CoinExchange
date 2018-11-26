@@ -34,4 +34,9 @@ export const sendTrade = trade => {
   socket.emit("receive trade", trade);
 };
 
+export const updateActiveUser = user => {
+  if (!socket) throw new Error("Not connected - call connect first");
+  socket.emit('change active user', user);
+}
+
 export default connect;

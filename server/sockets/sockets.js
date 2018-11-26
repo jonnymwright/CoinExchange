@@ -7,6 +7,7 @@ const sockets = http => {
   let matcher;
   let orderHistoryModel;
   let connectedSockets = [];
+  let usersBySocket = {};
   const onTrade = trade => {
     connectedSockets.forEach(socket => {
       socket.emit('aggregated buys', orderBook.getAggregatedBuyOrders());
@@ -27,6 +28,7 @@ const sockets = http => {
         connectedSockets.indexOf(socket),
         1
       );
+      delete usersBySocket[socket.id];
     });
 
     socket.on('request initial data', () => {
@@ -51,6 +53,11 @@ const sockets = http => {
           console.log('Unknown trade action: ', trade.action);
           console.log(trade);
       }
+    });
+
+    socket.on('change active user', newUser => {
+      usersBySocket[socket.id] = newUser;
+      console.log(usersBySocket);
     });
   });
   const socketPort = 4000;

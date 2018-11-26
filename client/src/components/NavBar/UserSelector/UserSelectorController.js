@@ -16,7 +16,9 @@ const mapDispatchToProps = {
 
 class UserSelectorController extends Component {
   async componentDidMount() {
-    this.props.receiveUsers(await loadUsers());
+    const users = await loadUsers();
+    this.props.receiveUsers(users);
+    this.props.onChange(users[0]);
   }
   
   render() {
