@@ -10,9 +10,13 @@ const sockets = http => {
   let usersBySocket = {};
   const onTrade = trade => {
     connectedSockets.forEach(socket => {
+      socket.emit('historic trades', orderHistoryModel.getHistoricalTrades(10));
       socket.emit('aggregated buys', orderBook.getAggregatedBuyOrders());
       socket.emit('aggregated sells', orderBook.getAggregatedSellOrders());
-      socket.emit('historic trades', orderHistoryModel.getHistoricalTrades(10));
+      if (usersBySocket[socket.id] === trade.recipient) {
+          socket.emit('my sells', orderBook.getSellOrdersFor(usersBySocket[socket.id]));
+          socket.emit('my buys', orderBook.getBuyOrdersFor(usersBySocket[socket.id]));
+        }
     });
   };
 
@@ -45,9 +49,15 @@ const sockets = http => {
       switch (trade.action) {
         case 'buy':
           matcher.addNewBuy(trade);
+          socket.emit('my buys', orderBook.getBuyOrdersFor(trade.user));
+          socket.emit('aggregated buys', orderBook.getAggregatedBuyOrders());
+          socket.broadcast.emit('aggregated buys', orderBook.getAggregatedBuyOrders());
           break;
         case 'sell':
           matcher.addNewSell(trade);
+          socket.emit('my sells', orderBook.getSellOrdersFor(trade.user));
+          socket.emit('aggregated sells', orderBook.getAggregatedSellOrders());
+          socket.broadcast.emit('aggregated sells', orderBook.getAggregatedSellOrders());
           break;
         default:
           console.log('Unknown trade action: ', trade.action);
@@ -57,7 +67,8 @@ const sockets = http => {
 
     socket.on('change active user', newUser => {
       usersBySocket[socket.id] = newUser;
-      console.log(usersBySocket);
+      socket.emit('my buys', orderBook.getBuyOrdersFor(newUser));
+      socket.emit('my sells', orderBook.getSellOrdersFor(newUser));
     });
   });
   const socketPort = 4000;

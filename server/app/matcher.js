@@ -40,7 +40,8 @@ class Matcher {
       const tradeQuantity = Math.min(quantity, available);
       onTradeMatched({
         price: bestOffer.price,
-        quantity: tradeQuantity
+        quantity: tradeQuantity,
+        user: trade.user
       });
       quantity -= tradeQuantity;
       bestOffer = existingOrders();

@@ -1,5 +1,12 @@
 var SortedSet = require("js-sorted-set");
 
+const sumQuantity = (offers) => {
+  return offers.reduce(
+    (accumulator, offer) => accumulator + offer.quantity,
+    0
+  )
+};
+
 // exampleOrderBook = {
 //   buyOrders: {
 //     5 : {
@@ -45,20 +52,14 @@ class OrderBookModel {
   getAggregatedBuyOrders() {
     return this.buyPrices.map(price => ({
       price: price,
-      quantity: this.buyOrders[price].orders.reduce(
-        (accumulator, offer) => accumulator + offer.quantity,
-        0
-      )
+      quantity: sumQuantity(this.buyOrders[price].orders)
     }));
   }
 
   getAggregatedSellOrders() {
     return this.sellPrices.map(price => ({
       price: price,
-      quantity: this.sellOrders[price].orders.reduce(
-        (accumulator, offer) => accumulator + offer.quantity,
-        0
-      )
+      quantity: sumQuantity(this.sellOrders[price].orders)
     }));
   }
 
@@ -112,6 +113,27 @@ class OrderBookModel {
   getSellOffer(price) {
     if (!this.sellOrders[price]) return;
     return this.sellOrders[price].orders;
+  }
+
+  getSellOrdersFor(user) {
+    return this.getOrdersFor(user, this.sellPrices, this.sellOrders);
+  }
+
+  getBuyOrdersFor(user) {
+    return this.getOrdersFor(user, this.buyPrices, this.buyOrders);
+  }
+
+  getOrdersFor(user, prices, orders) {
+    let result = prices.map((price) => {
+      return orders[price].orders.filter(order => order.user === user);
+    });
+    result = result.filter(offers => offers.length !== 0);
+    result = result.map(offers => ({
+      price: offers[0].price, 
+      quantity: sumQuantity(offers),
+      user: offers[0].user
+    }));
+    return result;
   }
 }
 

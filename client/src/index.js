@@ -9,18 +9,7 @@ import connect from './api/sockets';
 
 import configureStore from './store/configure-store';
 
-const initialState = {
-  user: {users: []},
-  myTrades: {
-    buys: [],
-    sells: [{
-      price: 9,
-      quantity: 5
-    }]
-  }
-}
-
-const store = configureStore(initialState);
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
