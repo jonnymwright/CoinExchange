@@ -1,6 +1,6 @@
 import React from "react";
 
-const NewTradesView = ({ onSubmit }) => {
+const NewTradesView = ({ onSubmit, user }) => {
   let price, quantity, action;
   return (
     <div>
@@ -46,7 +46,7 @@ const NewTradesView = ({ onSubmit }) => {
           type="submit"
           className="btn"
           onClick={(event) => {
-              onSubmit(price.value, quantity.value, action.value);
+              onSubmit(price.value, quantity.value, action.value, user);
               event.preventDefault();
               price.value = null;
               quantity.value = null;

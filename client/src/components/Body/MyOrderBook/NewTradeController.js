@@ -1,13 +1,20 @@
 import { connect } from 'react-redux';
 import NewTradesView from './NewTradesView';
+import { sendTrade } from '../../../api/sockets';
+
+const mapStateToProps = store => ({
+  user: store.user.activeUser
+});
 
 const mapDispatchToProps = () => ({
-    onSubmit: (price, quantity, action) => { console.log(price, quantity, action);  }
+  onSubmit: (price, quantity, action, user) => {
+    sendTrade({ price, quantity, action, user });
+  }
 });
 
 const NewTradeController = connect(
-    null,
-    mapDispatchToProps
-) (NewTradesView);
+  mapStateToProps,
+  mapDispatchToProps
+)(NewTradesView);
 
 export default NewTradeController;
