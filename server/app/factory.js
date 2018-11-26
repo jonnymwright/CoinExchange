@@ -17,19 +17,19 @@ const createMatcher = tradeEmitterCallback => {
     match => matchEmitter.emit("buy", match)
   );
   matchEmitter.on("sell", trade => {
+    orderHistoryModel.addTrade({ ...trade, time: new Date() });
     removeBuysFromOrderBook(trade, orderBook, trade => {
       if (tradeEmitterCallback) {
         tradeEmitterCallback(trade);
       }
-      orderHistoryModel.addTrade( {...trade, time: new Date()} );
     });
   });
   matchEmitter.on("buy", trade => {
+    orderHistoryModel.addTrade({ ...trade, time: new Date() });
     removeSellsFromOrderBook(trade, orderBook, trade => {
       if (tradeEmitterCallback) {
         tradeEmitterCallback(trade);
       }
-      orderHistoryModel.addTrade( {...trade, time: new Date()} );
     });
   });
 
