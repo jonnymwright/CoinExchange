@@ -1,6 +1,7 @@
 import React from "react";
+import TradeTimeView from './TradeTimeView';
 
-const RecentTradesView = ({ recentTrades, displayDate }) => (
+const RecentTradesView = ({ recentTrades }) => (
   <div className="card mb-4 shadow-sm">
     <div className="card-header">
       <h3 className="my-0 font-weight-normal">Recent trades</h3>
@@ -26,7 +27,7 @@ const RecentTradesView = ({ recentTrades, displayDate }) => (
               <tr key={i}>
                 <td>{trade.price}</td>
                 <td>{trade.quantity}</td>
-                <td>{displayDate(trade.time)}</td>
+                <td><TradeTimeView time={trade.time}/></td>
               </tr>
             );
           })}

@@ -6,15 +6,6 @@ async function fetchFromServer(resource) {
   return result;
 }
 
-export async function loadRecentTrades() {
-  const resultFromServer = await fetchFromServer("historical");
-  return resultFromServer.map(trade => ({
-    price: trade.price,
-    quantity: trade.quantity,
-    time: new Date(trade.time)
-  }));
-}
-
 export async function loadAggregatedBuys() {
   return fetchFromServer("aggregated/buys");
 }
