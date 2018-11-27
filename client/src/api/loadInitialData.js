@@ -6,14 +6,6 @@ async function fetchFromServer(resource) {
   return result;
 }
 
-export async function loadAggregatedBuys() {
-  return fetchFromServer("aggregated/buys");
-}
-
-export async function loadAggregatedSells() {
-  return fetchFromServer("aggregated/sells");
-}
-
 export async function loadUsers() {
   return fetchFromServer("users");
 }
