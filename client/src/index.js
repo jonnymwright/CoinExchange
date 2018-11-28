@@ -21,7 +21,7 @@ ReactDOM.render(
 connect(
   store.dispatch,
   {
-    recentTradesCount: 20,
+    recentTradesCount: 25,
     source: 'Web frontend'
   }
 );

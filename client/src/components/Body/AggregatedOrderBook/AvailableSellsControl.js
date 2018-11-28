@@ -3,7 +3,7 @@ import AvailableTradesView from "../AvailableTradesView";
 import { receiveAvailableSells } from "../../../reducers/availbleTrades/availbleTradesActionCreators";
 
 const mapStateToProps = (store) => ({
-    trades: store.availableTrades.sells,
+    trades: store.availableTrades.sells.slice(0, 10),
     type: "Sells"
 });
 const mapDispatchToProps = { receiveAvailableSells };
