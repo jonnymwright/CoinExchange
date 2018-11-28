@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import BotsContainer from './components/botsContainer';
 
 class App extends Component {
