@@ -43,8 +43,9 @@ const sockets = http => {
 
     socket.on('receive trade', trade => {
       trade.uid = uuidv4();
-      trade.quantity = Number(trade.quantity);
-      trade.price = Number(trade.price);
+      const round = num => Math.round(num * 100) / 100;
+      trade.quantity = round(Number(trade.quantity));
+      trade.price = round(Number(trade.price));
       console.log(trade);
       switch (trade.action) {
         case 'buy':

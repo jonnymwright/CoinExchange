@@ -1,5 +1,6 @@
 import React from "react";
 import TradeTimeView from './TradeTimeView';
+import RoundedNumber from '../../RoundedNumber'
 
 const RecentTradesView = ({ recentTrades }) => (
   <div className="card mb-4 shadow-sm">
@@ -25,8 +26,8 @@ const RecentTradesView = ({ recentTrades }) => (
           {recentTrades.map((trade, i) => {
             return (
               <tr key={i}>
-                <td>{trade.price}</td>
-                <td>{trade.quantity}</td>
+                <td><RoundedNumber>{trade.price}</RoundedNumber></td>
+                <td><RoundedNumber>{trade.quantity}</RoundedNumber></td>
                 <td><TradeTimeView time={trade.time}/></td>
               </tr>
             );

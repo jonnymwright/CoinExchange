@@ -1,4 +1,5 @@
 import React from "react";
+import RoundedNumber from '../RoundedNumber';
 
 const AvailableTradesView = ({ trades, type }) => (
   <div>
@@ -23,9 +24,9 @@ const AvailableTradesView = ({ trades, type }) => (
         {trades.map((trade, i) => {
           return (
             <tr key={i}>
-              <td>{trade.price}</td>
-              <td>{trade.quantity}</td>
-              <td>{trade.price * trade.quantity}</td>
+              <td><RoundedNumber>{trade.price}</RoundedNumber></td>
+              <td><RoundedNumber>{trade.quantity}</RoundedNumber></td>
+              <td><RoundedNumber>{trade.price * trade.quantity}</RoundedNumber></td>
             </tr>
           );
         })}
