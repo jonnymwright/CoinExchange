@@ -11,7 +11,7 @@ import {
 
 let socket;
 
-const connect = dispatch => {
+const connect = (dispatch, requestMetadata) => {
   socket = io('localhost:4000');
   socket.on('aggregated buys', buys => {
     dispatch(receiveAvailableBuys(buys));
@@ -33,7 +33,7 @@ const connect = dispatch => {
     dispatch(receiceMyBuys(buys));
   });
 
-  socket.emit('request initial data');
+  socket.emit('request initial data', requestMetadata);
 };
 
 export const sendTrade = trade => {

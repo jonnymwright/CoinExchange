@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import './index.css';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
@@ -18,6 +18,12 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-connect(store.dispatch);
+connect(
+  store.dispatch,
+  {
+    recentTradesCount: 20,
+    source: 'Web frontend'
+  }
+);
 
 registerServiceWorker();

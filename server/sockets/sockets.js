@@ -7,10 +7,12 @@ const sockets = http => {
   let matcher;
   let orderHistoryModel;
   let connectedSockets = [];
+  let connectionMetadata = []
   let usersBySocket = {};
   const onTrade = trade => {
     connectedSockets.forEach(socket => {
-      socket.emit('historic trades', orderHistoryModel.getHistoricalTrades(10));
+      metadata = connectionMetadata[socket.id] || {};
+      socket.emit('historic trades', orderHistoryModel.getHistoricalTrades(metadata.recentTradesCount));
       socket.emit('aggregated buys', orderBook.getAggregatedBuyOrders());
       socket.emit('aggregated sells', orderBook.getAggregatedSellOrders());
       if (usersBySocket[socket.id] === trade.recipient) {
@@ -35,10 +37,11 @@ const sockets = http => {
       delete usersBySocket[socket.id];
     });
 
-    socket.on('request initial data', () => {
+    socket.on('request initial data', (metadata) => {
+      connectionMetadata[socket.id] = metadata || {};
       socket.emit('aggregated buys', orderBook.getAggregatedBuyOrders());
       socket.emit('aggregated sells', orderBook.getAggregatedSellOrders());
-      socket.emit('historic trades', orderHistoryModel.getHistoricalTrades(10));
+      socket.emit('historic trades', orderHistoryModel.getHistoricalTrades(metadata.recentTradesCount));
     });
 
     socket.on('receive trade', trade => {

@@ -7,8 +7,14 @@ class OrderModelHistory {
     this.allTrades.unshift({ ...trade, time: new Date() });
   }
 
-  getHistoricalTrades(count = 10) {
-    return this.allTrades.slice(0, count);
+  getHistoricalTrades(limit) {
+    let result = this.allTrades;
+
+    if (limit) {
+      result = result.slice(0, limit)
+    }
+
+    return result;
   }
 }
 module.exports = OrderModelHistory;
