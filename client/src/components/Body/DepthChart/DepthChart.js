@@ -6,6 +6,7 @@ import d3Histogram from '../../../visualisations/D3Histogram';
 class DepthChart extends Component {
   constructor(props) {
     super(props);
+    this.myRef = React.createRef();
     this.graphState = {
       xMin: Number.POSITIVE_INFINITY,
       xMax: 0,
@@ -16,45 +17,35 @@ class DepthChart extends Component {
     };
   }
 
+  getProps() {
+    if (this.myRef)
+      return {
+        height: 400,
+        width: this.myRef.current.offsetWidth
+      };
+    return {
+      height: 0,
+      width: 0
+    };
+  }
+
   componentDidMount() {
     var el = ReactDOM.findDOMNode(this);
     this.graphState.data = this.bucket(this.props.buys);
-    d3Histogram.create(
-      el,
-      {
-        width: 490,
-        height: 360
-      },
-      this.graphState
-    );
+    d3Histogram.create(el, this.getProps(), this.graphState);
   }
 
   componentDidUpdate() {
     this.graphState.xMin = Number.POSITIVE_INFINITY;
     this.graphState.xMax = 0;
     this.graphState.yMax = 0;
-    this.graphState.data = this.bucket(this.props.buys, '#080')
-      .concat(this.bucket(this.props.sells, '#800'));
+    this.graphState.data = this.bucket(this.props.buys, '#080').concat(
+      this.bucket(this.props.sells, '#800')
+    );
 
-    d3Histogram.setScale(
-      {
-        width: 490,
-        height: 360
-      },
-      this.graphState
-    );
-    d3Histogram.updateAxis({
-      width: 490,
-      height: 360
-    });
-    console.log('re-drawing bars', this.graphState.data, );
-    d3Histogram.drawBar(
-      {
-        width: 490,
-        height: 360
-      },
-      this.graphState
-    );
+    d3Histogram.setScale(this.getProps(), this.graphState);
+    d3Histogram.updateAxis(this.getProps());
+    d3Histogram.drawBar(this.getProps(), this.graphState);
   }
 
   bucket(series, type) {
@@ -85,7 +76,7 @@ class DepthChart extends Component {
   }
 
   render() {
-    return <div className="Chart" />;
+    return <div ref={this.myRef} className="Chart" />;
   }
 }
 const mapStateToProps = store => ({

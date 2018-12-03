@@ -3,8 +3,10 @@ import * as d3 from 'd3';
 
 var d3Histogram = {};
 d3Histogram.spacing = {
-  leftAxisMargin: 30,
-  bottomAxisMargin: 30
+  topMargin: 5,
+  leftMargin: 30,
+  bottomMargin: 30,
+  rightMargin: 5
 };
 
 d3Histogram.create = function(el, props, state) {
@@ -15,7 +17,7 @@ d3Histogram.create = function(el, props, state) {
     .attr('width', props.width)
     .attr('height', props.height)
     .append('g')
-    .attr('transform', 'translate(' + this.spacing.leftAxisMargin + ',0)');
+    .attr('transform', 'translate(' + this.spacing.leftMargin + ',' + this.spacing.topMargin + ')');
 
   this.drawAxes(props, state);
 };
@@ -35,7 +37,7 @@ d3Histogram.drawAxes = function(props, state) {
     .call(this.xAxis)
     .attr(
       'transform',
-      'translate(0,' + (props.height - this.spacing.bottomAxisMargin) + ')'
+      'translate(0,' + (props.height - this.spacing.bottomMargin - this.spacing.topMargin) + ')'
     );
   this.svg
     .append('g')
@@ -46,11 +48,11 @@ d3Histogram.drawAxes = function(props, state) {
 d3Histogram.setScale = function(props, state) {
   this.xScale
     .domain([state.xMin, state.xMax + state.bucketSize])
-    .range([0, props.width - this.spacing.leftAxisMargin]);
+    .range([0, props.width - this.spacing.leftMargin - this.spacing.rightMargin]);
   this.xAxis.scale(this.xScale);
   this.yScale
     .domain([state.yMax, state.yMin])
-    .range([0, props.height - this.spacing.bottomAxisMargin]);
+    .range([0, props.height - this.spacing.bottomMargin - this.spacing.topMargin]);
   this.yAxis.scale(this.yScale);
 };
 
@@ -64,14 +66,16 @@ d3Histogram.updateAxis = function(props) {
     .select('.y')
     .transition(t)
     .call(this.yAxis);
-  this.svg
+  this.svg.select('g.gridlines').remove();
+  this.svg.append('g')
+    .attr('class', 'gridlines')
     .selectAll('line.y')
     .data(this.yScale.ticks(10))
     .enter()
       .append('line')
       .attr('class', 'y')
       .attr('x1', 0)
-      .attr('x2', props.width - this.spacing.leftAxisMargin)
+      .attr('x2', props.width - this.spacing.leftMargin - this.spacing.rightMargin)
       .attr('y1', this.yScale)
       .attr('y2', this.yScale)
       .style('stroke', '#ccc')
@@ -93,7 +97,7 @@ d3Histogram.drawBar = function(props, state) {
       .attr('x', key => this.xScale(key.price))
       .attr('y', key => yScale(key.quantity) + 'px')
       .attr('width', xScale(state.bucketSize) - xScale(0.0) + 'px')
-      .attr('height', key => props.height - this.spacing.bottomAxisMargin - yScale(key.quantity) + 'px' )
+      .attr('height', key => props.height - this.spacing.bottomMargin - this.spacing.topMargin - yScale(key.quantity) + 'px' )
       .attr('price', key => key.price)
       .attr('quantity', key => key.quantity)
       .attr('fill', key => key.type)
