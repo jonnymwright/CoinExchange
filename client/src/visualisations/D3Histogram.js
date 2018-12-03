@@ -46,8 +46,9 @@ d3Histogram.drawAxes = function(props, state) {
 };
 
 d3Histogram.setScale = function(props, state) {
+  const halfBucketSize = state.bucketSize/2;
   this.xScale
-    .domain([state.xMin, state.xMax + state.bucketSize])
+    .domain([state.xMin - halfBucketSize, state.xMax + halfBucketSize])
     .range([0, props.width - this.spacing.leftMargin - this.spacing.rightMargin]);
   this.xAxis.scale(this.xScale);
   this.yScale
@@ -94,7 +95,7 @@ d3Histogram.drawBar = function(props, state) {
     .enter()
       .append('rect')
       .attr('class', key => 'bar ' + key.type)
-      .attr('x', key => this.xScale(key.price))
+      .attr('x', key => this.xScale(key.price - state.bucketSize /2))
       .attr('y', key => yScale(key.quantity) + 'px')
       .attr('width', xScale(state.bucketSize) - xScale(0.0) + 'px')
       .attr('height', key => props.height - this.spacing.bottomMargin - this.spacing.topMargin - yScale(key.quantity) + 'px' )
