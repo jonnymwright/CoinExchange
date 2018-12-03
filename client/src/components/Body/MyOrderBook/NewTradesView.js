@@ -5,7 +5,7 @@ const NewTradesView = ({ onSubmit, user }) => {
   return (
     <div>
       <div className="card-header">
-        <h3>New</h3>
+        <h4>New</h4>
       </div>
       <form>
         <div className="mb-3">
